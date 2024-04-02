@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -24,7 +25,8 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('projects.create');
+        $types= Type::all();
+        return view('projects.create', compact('types'));
     }
 
 
@@ -33,6 +35,7 @@ public function store(Request $request)
     $request->validate([
         'title' => 'required|max:255|unique:projects',
         'img' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'type_id' =>'nullable', 'exists:types,id'
     ]);
 
     $formData = $request->all();
@@ -73,7 +76,8 @@ public function store(Request $request)
     public function edit(string $id)
     {
         $project = Project::find($id);
-        return view ('projects.edit', compact('project'));
+        $types= Type::all();
+        return view ('projects.edit', compact('project','types'));
     }
 
     /**

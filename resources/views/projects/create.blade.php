@@ -21,8 +21,19 @@
 
         </div>
 
+        <div class="mt-3 mb-3">
+            <label for="type_id">Type</label>
+            <select class="w w-56" name="type_id" id="type_id">
+            <option selected value="">Select One</option>
+            @foreach ($types as $item)
+            <option  value="{{$item->id}}">{{$item->name}}</option>
+            @endforeach
+            </select>
 
-        <div class="mb-3">
+        </div>
+
+
+        <div class="mb-3 flex items-center">
             <label for="description" class="form-label">Example textarea</label>
             <textarea class="form-control" id="description" name="description" rows="3" placeholder="Insert a description"></textarea>
           </div>

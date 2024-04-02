@@ -18,7 +18,7 @@
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:-ms-17 sm:flex "> <!-- Fixed a typo in sm:ms-10 -->
                     <x-nav-link :href="route('dashboard.projects.index')" :active="request()->routeIs('dashboard.projects.index')">
-                        Project
+                        Projects
                     </x-nav-link>
                 </div>
 
