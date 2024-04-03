@@ -16,7 +16,7 @@ class TypeSeeder extends Seeder
      */
     public function run(Faker $faker): void
     {
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 2; $i++) {
             $type = new Type();
             $type->name = $faker->randomElement(['Frontend', 'Backend']);
             $type->slug = Str::slug($type->name, '-');
