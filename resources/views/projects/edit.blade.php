@@ -20,6 +20,27 @@
                 <label for="img" class="form-label">Image</label>
                 <input type="file" class="form-control" id="img" name="img" placeholder="Image URL" value="{{old('img', $project->img)}}">
             </div>
+            <div class="mt-3 mb-3">
+                <label for="type_id">Type</label>
+                <select class="w w-56" name="type_id" id="type_id">
+                    <option selected value="">Select One</option>
+                    @foreach ($types as $item)
+                    <option  value="{{$item->id}}">{{$item->name}}</option>
+                    @endforeach
+                </select>
+
+            </div>
+
+            <div class="mt-3 mb-3">
+                <label for="technologies">Technology</label>
+                <select class="w w-56" name="technologies" id="technologies">
+                <option selected value="">Select One</option>
+                @foreach ($technologies as $item)
+                <option  value="{{$item->id}}">{{$item->name}}</option>
+                @endforeach
+                </select>
+
+            </div>
 
             <div class="mb-3 flex items-center">
                 <label for="description" class="form-label">Description</label>
@@ -27,7 +48,7 @@
               </div>
 
             <div class="mb-3">
-                <label for="software" class="form-label">Softwares utilised</label>
+                <label for="software" class="form-label">Software</label>
                 <input type="text" class="form-control" id="software" name="software" placeholder="New title: max 4 words" value="{{old('software', $project->software)}}">
             </div>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -26,7 +27,8 @@ class ProjectController extends Controller
     public function create()
     {
         $types= Type::all();
-        return view('projects.create', compact('types'));
+        $technologies= Technology::all();
+        return view('projects.create', compact('types', 'technologies'));
     }
 
 
@@ -35,7 +37,9 @@ public function store(Request $request)
     $request->validate([
         'title' => 'required|max:255|unique:projects',
         'img' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-        'type_id' =>'nullable', 'exists:types,id'
+        'type_id' =>'nullable', 'exists:types,id',
+        'technologies' => ['nullable', 'exists:technologies,id']
+
     ]);
 
     $formData = $request->all();
@@ -46,15 +50,22 @@ public function store(Request $request)
     // Assegna lo slug ai dati del modulo
     $formData['slug'] = $slug;
 
+    $newProject = Project::create($formData);
+
+
+    if ($request->has('technologies')) {
+        // Salva il file e ottieni il percorso
+        $newProject->technology()->attach($request->technologies);
+    }
+
     if ($request->hasFile('img')) {
         // Salva il file e ottieni il percorso
         $img_path = $request->file('img')->store('project_images', 'public');
         $formData['img'] = $img_path;
     }
 
-    $newProject = Project::create($formData);
-
     $projects = Project::all();
+
 
     return view('projects.index', compact('projects'));
 }
@@ -77,7 +88,8 @@ public function store(Request $request)
     {
         $project = Project::find($id);
         $types= Type::all();
-        return view ('projects.edit', compact('project','types'));
+        $technologies= Technology::all();
+        return view ('projects.edit', compact('project','types', 'technologies'));
     }
 
     /**
