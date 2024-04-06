@@ -50,13 +50,10 @@ public function store(Request $request)
     // Assegna lo slug ai dati del modulo
     $formData['slug'] = $slug;
 
-    $newProject = Project::create($formData);
+    $img_path = $request->file('img')->store('project_images', 'public');
+    $formData['img'] = $img_path;
 
-    if ($request->hasFile('img')) {
-        // Salva il file e ottieni il percorso
-        $img_path = $request->file('img')->store('project_images', 'public');
-        $formData['img'] = $img_path;
-    }
+    $newProject = Project::create($formData);
 
     if ($request->has('technologies')) {
         // Salva il file e ottieni il percorso
