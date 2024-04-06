@@ -52,17 +52,17 @@ public function store(Request $request)
 
     $newProject = Project::create($formData);
 
+    if ($request->hasFile('img')) {
+        // Salva il file e ottieni il percorso
+        $img_path = $request->file('img')->store('project_images', 'public');
+        $formData['img'] = $img_path;
+    }
 
     if ($request->has('technologies')) {
         // Salva il file e ottieni il percorso
         $newProject->technology()->attach($request->technologies);
     }
 
-    if ($request->hasFile('img')) {
-        // Salva il file e ottieni il percorso
-        $img_path = $request->file('img')->store('project_images', 'public');
-        $formData['img'] = $img_path;
-    }
 
     $projects = Project::all();
 
